@@ -116,16 +116,7 @@ def fit_path(x,
                 time_limit=time_limit)
             uppersol = tree_sol.beta
         elif solver == 'gurobi':
-            from .relaxation import l0gurobi
-            uppersol, _, _, _ = l0gurobi(
-                x_centered,
-                y_centered,
-                current_lambda_0,
-                lambda_2,
-                m,
-                lb=np.zeros(x_centered.shape[1]),
-                ub=np.ones(x_centered.shape[1]),
-                relaxed=False)
+            raise Exception("gurobi is not supported for these experiments")
         # Save the sol.
         beta_unscaled = uppersol * beta_multiplier
         b0 = mean_y - np.dot(mean_x, beta_unscaled)
@@ -135,6 +126,7 @@ def fit_path(x,
             "lambda_0": current_lambda_0,
             "M": m,
             "Time_exceeded": False,
+            "info": tree_sol,
         })
 
         # Compute the next lambda_0 in the grid
